@@ -4,13 +4,7 @@
 
 <mapper namespace="com.example.test1.mapper.StuMapper">
 	<select id="stuInfo" parameterType="hashmap" resultType="com.example.test1.model.Student">
-		SELECT *
-		FROM STUDENT
-		WHERE STU_NAME = #{keyword}
-	</select>
-	
-	<select id="stuList" parameterType="hashmap" resultType="com.example.test1.model.Student">
-		SELECT *
-		FROM STUDENT
+		SELECT BOARDNO, TITLE, USERID, CNT
+		FROM TBL_BOARD
 	</select>
 </mapper>
