@@ -4,15 +4,22 @@ import java.util.HashMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
+import com.example.test1.controller.StuController;
 import com.example.test1.mapper.UserMapper;
 import com.example.test1.model.User;
+import com.google.gson.Gson;
 
 @Service
 public class UserService {
+
+    private final StuController stuController;
 	
 	@Autowired
 	UserMapper userMapper;
+
+    UserService(StuController stuController) {
+        this.stuController = stuController;
+    }
 	
 	public HashMap<String, Object> userLogin(HashMap<String, Object> map) {
 		// TODO Auto-generated method stub
@@ -23,6 +30,10 @@ public class UserService {
 			System.out.println(user.getName());
 			System.out.println(user.getNickName());
 		}
-		return resultMap;
+
+		return new Gson().toJson(result);
 	}
+	
+	
+	
 }

@@ -29,7 +29,7 @@
 			<input v-model="keyword" placeholder="검색어">
 			<button @click="fnList">검색</button>
 		</div>
-			
+		
     </div>
 </body>
 </html>
