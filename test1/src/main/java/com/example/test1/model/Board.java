@@ -52,10 +52,10 @@ public class Board {
 	public void setKind(String kind) {
 		this.kind = kind;
 	}
-	public String getCdate(String cdate) {
+	public String getCdate() {
 		return cdate;
 	}
-	public void setCdate() {
+	public void setCdate(String cdate) {
 		this.cdate = cdate;
 	}
 }
