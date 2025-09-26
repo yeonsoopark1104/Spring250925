@@ -29,7 +29,7 @@
 			<input v-model="keyword" placeholder="검색어">
 			<button @click="fnInfo">검색</button>
 		</div>
-		<div>
+        <div>
             <table>
                 <tr>
                     <th>학번</th>
@@ -37,6 +37,7 @@
                     <th>학과</th>
                     <th>학년</th>
                     <th>성별</th>
+                    <th>삭제</th>
                 </tr>
                 <tr v-for="item in list">
                     <td>{{item.stuNo}}</td>
@@ -44,9 +45,11 @@
                     <td>{{item.stuDept}}</td>
                     <td>{{item.stuGrade}}</td>
                     <td>{{item.stuGender}}</td>
+                    <td><button @click="fnRemove(item.stuNo)">삭제</button></td>
                 </tr>
             </table>
         </div>
+		
     </div>
 </body>
 </html>
@@ -56,7 +59,8 @@
         data() {
             return {
                 // 변수 - (key : value)
-				keyword : ""
+				keyword : "",
+                list : []
             };
         },
         methods: {
@@ -86,11 +90,26 @@
                     type: "POST",
                     data: param,
                     success: function (data) {
-						console.log(data); 
-                        
+						console.log(data);
                     }
                 });
-            }
+            },
+            fnRemove: function (stuNo) {
+                let self = this;
+                let param = {
+                    stuNo : stuNo
+                };
+                $.ajax({
+                    url: "stu-delete.dox",
+                    dataType: "json",
+                    type: "POST",
+                    data: param,
+                    success: function (data) {
+						alert("삭제되었습니다.");
+                        self.fnList();
+                    }
+                });
+            },
         }, // methods
         mounted() {
             // 처음 시작할 때 실행되는 부분

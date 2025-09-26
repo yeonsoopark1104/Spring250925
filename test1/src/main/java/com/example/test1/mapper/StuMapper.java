@@ -11,6 +11,9 @@ import com.example.test1.model.Student;
 public interface StuMapper {
 	Student stuInfo(HashMap<String, Object> map);
 	List<Student> stuList(HashMap<String, Object> map);
+	
+	// 학생 삭제
+	int deleteStudent(HashMap<String, Object> map);
 }
 
 

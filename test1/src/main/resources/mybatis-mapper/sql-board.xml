@@ -2,9 +2,16 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.example.test1.mapper.StuMapper">
-	<select id="stuInfo" parameterType="hashmap" resultType="com.example.test1.model.Student">
-		SELECT BOARDNO, TITLE, USERID, CNT
-		FROM TBL_BOARD
+<mapper namespace="com.example.test1.mapper.BoardMapper">
+	<select id="selectBoardList" parameterType="hashmap" resultType="com.example.test1.model.Board">
+		SELECT 
+			B.*, TO_CHAR(CDATETIME, 'YYYY-MM-DD') AS CDATE
+		FROM TBL_BOARD B
 	</select>
+	
+	<delete id="deleteBoard" parameterType="hashmap">
+		DELETE FROM TBL_BOARD
+		WHERE BOARDNO = #{boardNo}
+	</delete>
+	
 </mapper>
