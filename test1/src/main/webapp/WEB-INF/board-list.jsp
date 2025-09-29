@@ -7,6 +7,7 @@
     <title>Document</title>
     <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="/js/page-change.js"></script>
     <style>
         table, tr, td, th{
             border : 1px solid black;
@@ -52,7 +53,7 @@
                 </tr>
                 <tr v-for="item in list">
                     <td>{{item.boardNo}}</td>
-                    <td>{{item.title}}</td>
+                    <td><a href="javascript:;" @click="fnView(item.boardNo)">{{item.title}}</a></td>
                     <td>{{item.userId}}</td>
                     <td>{{item.cnt}}</td>
                     <td>{{item.cdate}}</td>
@@ -77,9 +78,9 @@
                 // 변수 - (key : value)
                 list : [],
                 kind : "",
-                order : "num"
+                order : "num",
                 sessionId : "${sessionId}",
-                
+                status : "${sessionStatus}"
             };
         },
         methods: {
@@ -116,6 +117,9 @@
                         self.fnList();
                     }
                 });
+            },
+            fnView : function(boardNo){
+                pageChange("board-view.do", {boardNo : boardNo});
             }
         }, // methods
         mounted() {

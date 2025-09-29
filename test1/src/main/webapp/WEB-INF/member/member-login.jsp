@@ -25,19 +25,20 @@
 <body>
     <div id="app">
         <!-- html 코드는 id가 app인 태그 안에서 작업 -->
-        <div>
-            <label>아이디 : <input v-model="id"></label>
+		<div>
+            <div>
+                <label>아이디 : <input v-model="id"></label>
+            </div>
+            <div>
+                <label>비밀번호 : <input type="password" v-model="pwd"></label>
+            </div>
+            <div>
+                <button @click="fnLogin">로그인</button>
+                <a href="/member/join.do"><button>회원가입</button></a>
+            </div>
         </div>
-        <div>
-            <label>비밀번호 : <input type="password" v-model="pwd"></label>
-        </div>
-        <div>
-            <button @click="fnLogin">로그인</button>
-            <a href="/member/join.do"><button>회원가입</button></a>
-        </div>
-
-
-
+		
+		
     </div>
 </body>
 </html>
@@ -53,7 +54,7 @@
         },
         methods: {
             // 함수(메소드) - (key : function())
-            fnLogin: function () {
+            fnLogin : function () {
                 let self = this;
                 let param = {
                     id : self.id,
@@ -80,4 +81,4 @@
     });
 
     app.mount('#app');
-</script>   
+</script>

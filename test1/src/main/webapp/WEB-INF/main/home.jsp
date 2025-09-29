@@ -45,18 +45,16 @@
         },
         methods: {
             // 함수(메소드) - (key : function())
-            fnLogout: function () {
+            fnLogout : function () {
                 let self = this;
-                let param = {
-
-                };
+                let param = {};
                 $.ajax({
                     url: "/member/logout.dox",
                     dataType: "json",
                     type: "POST",
                     data: param,
                     success: function (data) {
-                        alert(data.msg)
+                        alert(data.msg);
                         location.href="/member/login.do";
                     }
                 });

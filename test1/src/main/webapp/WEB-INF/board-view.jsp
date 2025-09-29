@@ -1,4 +1,4 @@
-    <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,24 +12,34 @@
             border : 1px solid black;
             border-collapse: collapse;
             padding : 5px 10px;
-            text-align: center;
         }
         th{
             background-color: beige;
         }
-        tr:nth-child(even){
-            background-color: azure;
+        input{
+            width: 350px;
         }
     </style>
 </head>
 <body>
     <div id="app">
         <!-- html 코드는 id가 app인 태그 안에서 작업 -->
-         <table>
-            <th>제목</th>
-            <th>작성자</th>
-            <th>내용</th>
-         </table>
+        <div>
+            <table>
+                <tr>
+                    <th>제목</th>
+                    <td>{{info.title}}</td>
+                </tr>
+                <tr>
+                    <th>작성자</th>
+                    <td>{{info.userId}}</td>
+                </tr>
+                <tr>
+                    <th>내용</th>
+                    <td>{{info.contents}}</td>
+                </tr>
+            </table>
+        </div>
     </div>
 </body>
 </html>
@@ -39,12 +49,13 @@
         data() {
             return {
                 // 변수 - (key : value)
-                boardNo : "${boardNo}"
+                boardNo : "${boardNo}",
+                info : {}
             };
         },
         methods: {
             // 함수(메소드) - (key : function())
-            fnInfo: function () {
+            fnInfo : function () {
                 let self = this;
                 let param = {
                     boardNo : self.boardNo
@@ -56,6 +67,7 @@
                     data: param,
                     success: function (data) {
                         console.log(data);
+                        self.info = data.info;
                     }
                 });
             }
