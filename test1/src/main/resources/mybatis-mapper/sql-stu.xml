@@ -14,14 +14,8 @@
 		FROM STUDENT
 	</select>
 	
-	<delete id="deleteStudent">
+	<delete id="deleteStudent" parameterType="hashmap">
 		DELETE FROM STUDENT
 		WHERE STU_NO = #{stuNo}
 	</delete>
-	
-	<select id="selectStuView" parameterType="hashmap" resultType="com.example.test1.model.Student">
-		SELECT *
-		FROM TBL_BOARD B
-		INNER JOIN ... 
-	</select>
 </mapper>

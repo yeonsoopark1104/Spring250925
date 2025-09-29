@@ -21,6 +21,7 @@
 			ORDER BY CNT DESC
 		</if>
 		
+		
 	</select>
 	
 	<delete id="deleteBoard" parameterType="hashmap">
@@ -30,13 +31,7 @@
 	
 	<insert id="insertBoard" parameterType="hashmap">
 		INSERT INTO TBL_BOARD 
-		VALUES(B_SEQ.NEXTVAL, #{title}, #{contetns}, #{userId}, 0, 0, 1, SYSDATE, SYSDATE)
+		VALUES(B_SEQ.NEXTVAL, #{title}, #{contents}, #{userId}, 0, 0, 1 , SYSDATE, SYSDATE)
 	</insert>
-	
-	<select id="selectBoard" parameterType="hashmap" resultType="com.example.test1.model.Board">
-		SELECT *
-		FROM TBL_BOARD
-		WHERE BOARD = #{boardNo} 
-	</select>
 	
 </mapper>
