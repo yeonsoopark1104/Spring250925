@@ -7,6 +7,7 @@
     <title>Document</title>
     <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="/js/page-change.js"></script>
     <style>
         table, tr, td, th{
             border : 1px solid black;
@@ -41,7 +42,9 @@
                 </tr>
                 <tr v-for="item in list">
                     <td>{{item.stuNo}}</td>
-                    <td>{{item.stuName}}</td>
+                    <td>
+                        <a href="javascript:;" @click="fnView(item.stuNo)">{{item.stuName}}</a>
+                    </td>
                     <td>{{item.stuDept}}</td>
                     <td>{{item.stuGrade}}</td>
                     <td>{{item.stuGender}}</td>
@@ -110,6 +113,9 @@
                     }
                 });
             },
+            fnView : function(stuNo){
+                pageChange("/stu-view.do", {stuNo : stuNo});
+            }
         }, // methods
         mounted() {
             // 처음 시작할 때 실행되는 부분

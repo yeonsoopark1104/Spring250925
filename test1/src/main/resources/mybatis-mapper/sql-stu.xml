@@ -18,4 +18,18 @@
 		DELETE FROM STUDENT
 		WHERE STU_NO = #{stuNo}
 	</delete>
+	
+	<select id="selectStudent" parameterType="hashmap" resultType="com.example.test1.model.Student">
+		SELECT 
+		    S.STU_NO, S.STU_NAME, S.STU_DEPT, NVL(AVG(ENR_GRADE), 0) AS ENR_AVG,
+		    (SELECT ROUND(AVG(ENR_GRADE), 1) FROM ENROL) AS TOTAL_AVG,
+		    TOTAL_AVG2
+		FROM STUDENT S
+		LEFT JOIN ENROL E ON S.STU_NO = E.STU_NO
+		INNER JOIN (
+		    SELECT ROUND(AVG(ENR_GRADE), 1) AS TOTAL_AVG2 FROM ENROL
+		) T ON 1=1
+		WHERE S.STU_NO = #{stuNo}
+		GROUP BY S.STU_NO, S.STU_NAME, S.STU_DEPT, TOTAL_AVG2
+	</select>
 </mapper>

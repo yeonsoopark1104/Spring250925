@@ -27,6 +27,16 @@
     <div id="app">
         <!-- html 코드는 id가 app인 태그 안에서 작업 -->
         <div>
+            <select v-model="searchOption">
+                <option value="all">:: 전체 ::</option>
+                <option value="title">:: 제목 ::</option>
+                <option value="id">:: 작성자 ::</option>
+            </select>
+            <input v-model="keyword">
+            <button @click="fnList">검색</button>
+
+        </div>
+        <div>
             <select v-model="kind" @change="fnList">
                 <option value="">:: 전체 ::</option>
                 <option value="1">:: 공지사항 ::</option>
@@ -53,9 +63,12 @@
                 </tr>
                 <tr v-for="item in list">
                     <td>{{item.boardNo}}</td>
-                    <td><a href="javascript:;" @click="fnView(item.boardNo)">{{item.title}}</a></td>
+                    <td>
+                        <a href="javascript:;" @click="fnView(item.boardNo)">{{item.title}}</a>
+                        <span v-if="item.commentCnt != 0" style="color:red;"> [{{item.commentCnt}}]</span>
+                    </td>
                     <td>{{item.userId}}</td>
-                    <td>{{item.cnt}}</td>
+                    <td> {{item.cnt}}</td>
                     <td>{{item.cdate}}</td>
                     <td>
                         <button v-if="sessionId == item.userId || status == 'A'" @click="fnRemove(item.boardNo)">삭제</button>
@@ -79,6 +92,9 @@
                 list : [],
                 kind : "",
                 order : "num",
+                keyword : "", // 검색어
+                searchOption : "all", // 검색 옵션(기본 : 전체)
+
                 sessionId : "${sessionId}",
                 status : "${sessionStatus}"
             };
@@ -89,7 +105,9 @@
                 let self = this;
                 let param = {
                     kind : self.kind,
-                    order : self.order
+                    order : self.order,
+                    keyword : self.keyword,
+                    searchOption : self.searchOption
                 };
                 $.ajax({
                     url: "board-list.dox",
