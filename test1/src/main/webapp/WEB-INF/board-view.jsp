@@ -55,9 +55,9 @@
         <table id="input">
             <th>댓글 입력</th>
             <td>
-                <textarea cols="40" rows="4"></textarea>
+                <textarea cols="40" rows="4" v-model="contents"></textarea>
             </td>
-            <td><button>저장</button></td>
+            <td><button @click="fnCommentAdd">저장</button></td>
         </table>
 
     </div>
@@ -71,7 +71,9 @@
                 // 변수 - (key : value)
                 boardNo : "${boardNo}",
                 info : {},
-                commentList : []
+                commentList : [],
+                session : "${session}",
+                comment : 
             };
         },
         methods: {
@@ -80,6 +82,25 @@
                 let self = this;
                 let param = {
                     boardNo : self.boardNo
+                };
+                $.ajax({
+                    url: "board-view.dox",
+                    dataType: "json",
+                    type: "POST",
+                    data: param,
+                    success: function (data) {
+                        console.log(data);
+                        self.info = data.info;
+                        self.commentList = data.commentList;
+                    }
+                });
+            },
+            fnCommentAdd : function () {
+                let self = this;
+                let param = {
+                    boardNo : self.boardNo,
+                    id : self.sessionId,
+                    contents : self.contents
                 };
                 $.ajax({
                     url: "board-view.dox",

@@ -1,5 +1,6 @@
 package com.example.test1.dao;
 
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 
@@ -62,7 +63,23 @@ public class BoardService {
 		
 	}
 	
+	public HashMap<String, Object> addComment(HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		
+		try {
+			int cnt = boardMapper.insertComment(map);
+			resultMap.put("result", "success");
+			resultMap.put("msg", "댓글이 등록되었습니다");
+		} catch (Exception e) {
+			resultMap.put("result", "fail");
+			resultMap.put("msg", "서버 오류가 발생했습니다. 다시 시도해주세요");
+		}
+		
+		
+		resultMap.put("result", "success");
+		return resultMap;
 	
-	
+	}
 	
 }

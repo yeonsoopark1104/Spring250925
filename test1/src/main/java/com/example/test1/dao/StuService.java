@@ -57,4 +57,4 @@ public class StuService {
 		resultMap.put("info", stu);
 		return resultMap;
 	}
-}
+}	
