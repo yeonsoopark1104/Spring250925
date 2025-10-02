@@ -32,7 +32,11 @@
                 </tr>
                 <tr>
                     <th>작성자</th>
-                    <td><input v-model="userId"></td>
+                    <td>{{userId}}</td>
+                </tr>
+                <tr>
+                    <th>파일첨부</th>
+                    <td><input type="file" id="file1" name="file1" accept=".jpg, .png"></td>
                 </tr>
                 <tr>
                     <th>내용</th>
@@ -53,7 +57,7 @@
             return {
                 // 변수 - (key : value)
                 title : "",
-                userId : "",
+                userId : "${sessionId}",
                 contents : "",
                 sessionId : "${sessionId}"
             };
@@ -75,7 +79,27 @@
                     success: function (data) {
                         alert("등록되었습니다.");
                         location.href="board-list.do";
+                        console.log(data);
+                        var form = new FormData();
+                        form.append( "file1",  $("#file1")[0].files[0] );
+                        form.append( "boardNo",  data.boardNo); // 임시 pk
+                        self.upload(form);  
+                        // location.href="borad-list.do"
                     }
+                });
+            },
+            // 파일 업로드
+            upload : function(form){
+                var self = this;
+                $.ajax({
+                    url : "/fileUpload.dox"
+                    , type : "POST"
+                    , processData : false
+                    , contentType : false
+                    , data : form
+                    , success:function(response) { 
+                        console.log(data);
+                   }	           
                 });
             }
         }, // methods

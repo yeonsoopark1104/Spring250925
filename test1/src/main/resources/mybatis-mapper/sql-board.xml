@@ -6,7 +6,7 @@
 	<select id="selectBoardList" parameterType="hashmap" resultType="com.example.test1.model.Board">
 		SELECT 
 		    B.*, 
-		    TO_CHAR(CDATETIME, 'YYYY-MM-DD') AS CDATE, 
+		    DECODE( TO_CHAR(CDATETIME, 'YYYY-MM-DD'), TO_CHAR(SYSDATE, 'YYYY-MM-DD'), TO_CHAR(CDATETIME, 'HH24:MI:SS'), TO_CHAR(CDATETIME, 'YYYY-MM-DD')  ) AS CDATE,
 		    NVL(CCNT, 0) AS COMMENTCNT
 		FROM TBL_BOARD B
 		LEFT JOIN (
@@ -32,6 +32,9 @@
 			AND USERID LIKE '%' || #{keyword} || '%'
 		</if>
 		
+		<if test="order == 'time'">
+			ORDER BY B.CDATETIME DESC
+		</if>
 		<if test="order == 'num'">
 			ORDER BY B.BOARDNO ASC
 		</if>
@@ -41,6 +44,31 @@
 		<if test="order == 'cnt'">
 			ORDER BY CNT DESC
 		</if>
+		OFFSET #{page} ROWS FETCH NEXT #{pageSize} ROWS ONLY
+		
+	</select>
+	
+	<select id="selectBoardCnt" parameterType="hashmap" resultType="int">
+		SELECT COUNT(*)
+		FROM TBL_BOARD B
+		WHERE 1=1
+		<if test="kind != '' and kind != null">
+			AND KIND = #{kind}
+		</if>
+		
+		<if test="searchOption == 'all'">
+			AND (
+				TITLE LIKE '%' || #{keyword} || '%' OR
+				USERID LIKE '%' || #{keyword} || '%'
+			)
+		</if>
+		<if test="searchOption == 'title'">
+			AND TITLE LIKE '%' || #{keyword} || '%'
+		</if>
+		<if test="searchOption == 'id'">
+			AND USERID LIKE '%' || #{keyword} || '%'
+		</if>
+		
 		
 		
 	</select>
@@ -50,7 +78,7 @@
 		WHERE BOARDNO = #{boardNo}
 	</delete>
 	
-	<insert id="insertBoard" parameterType="hashmap">
+	<insert id="insertBoard" parameterType="hashmap" useGeneratedKeys="true" keyColumn="BOARDNO" keyProperty="boardNo">
 		INSERT INTO TBL_BOARD 
 		VALUES(B_SEQ.NEXTVAL, #{title}, #{contents}, #{userId}, 0, 0, 1 , SYSDATE, SYSDATE)
 	</insert>
@@ -66,11 +94,30 @@
 		FROM TBL_COMMENT C
 		INNER JOIN TBL_USER U ON C.USERID = U.USERID
 		WHERE C.BOARDNO = #{boardNo}
+		ORDER BY C.CDATETIME ASC
 	</select>
 	
 	<insert id="insertComment" parameterType="hashmap">
-		INSERT INTO TBL_COMMENT 
-		VALUES(COMMENT_SEQ.NEXTVAL, #{boradNo}, #{contetns}, ${id}, 0, NULL, SYSDATE, STSDATE)
+		INSERT INTO TBL_COMMENT
+		VALUES(COMMENT_SEQ.NEXTVAL, #{boardNo}, #{contents}, #{id}, 0, NULL, SYSDATE, SYSDATE)
 	</insert>
+	
+	<update id="updateCnt" parameterType="hashmap">
+		UPDATE TBL_BOARD
+		SET
+			CNT = CNT + 1
+		WHERE BOARDNO = #{boardNo}
+	</update>
+	
+	<insert id="inertBoardImg" parameterType="hashmap">
+		INSERT INTO TBL_BOARD_FILE
+		VALUES (FILE_SEQ.NEXTVAL, #{boardNo}, #{path}, #{fileName}, #{orgName}, #{size}, #{ext})
+	</insert>
+	
+	<select id="selectFileList" parameterType="hashmap" resultType="com.examle.test1.model.Board">
+		SELECT *
+		FROM TBL_BAORD_FILE
+		WHERE BOARDNO + #{boardNo}
+	</select>
 	
 </mapper>

@@ -1,4 +1,3 @@
-
 package com.example.test1.model;
 
 public class Board {
@@ -11,6 +10,10 @@ public class Board {
 	private String kind;
 	private String cdate;
 	private int commentCnt;
+	
+	private String fileNo;
+	private String filePath;
+	private String fileName;
 	
 	public int getBoardNo() {
 		return boardNo;
@@ -66,4 +69,5 @@ public class Board {
 	public void setCommentCnt(int commentCnt) {
 		this.commentCnt = commentCnt;
 	}
+
 }

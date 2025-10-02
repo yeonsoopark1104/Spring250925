@@ -36,6 +36,10 @@
                     <td>{{info.userId}}</td>
                 </tr>
                 <tr>
+                    <th>조회수</th>
+                    <td>{{info.cnt}}</td>
+                </tr>
+                <tr>
                     <th>내용</th>
                     <td>{{info.contents}}</td>
                 </tr>
@@ -59,7 +63,7 @@
             </td>
             <td><button @click="fnCommentAdd">저장</button></td>
         </table>
-
+        <div style="margin-bottom : 500px;"></div>
     </div>
 </body>
 </html>
@@ -72,8 +76,8 @@
                 boardNo : "${boardNo}",
                 info : {},
                 commentList : [],
-                session : "${session}",
-                comment : 
+                sessionId : "${sessionId}",
+                contents : ""
             };
         },
         methods: {
@@ -103,14 +107,14 @@
                     contents : self.contents
                 };
                 $.ajax({
-                    url: "board-view.dox",
+                    url: "/comment/add.dox",
                     dataType: "json",
                     type: "POST",
                     data: param,
                     success: function (data) {
-                        console.log(data);
-                        self.info = data.info;
-                        self.commentList = data.commentList;
+                        alert(data.msg);
+                        self.contents = "";
+                        self.fnInfo();
                     }
                 });
             }
