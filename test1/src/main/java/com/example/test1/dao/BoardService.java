@@ -62,6 +62,7 @@ public class BoardService {
 		
 		List<Board> fileList = boardMapper.selectFileList(map);
 		
+		resultMap.put("fileList", fileList);
 		resultMap.put("info", board);
 		resultMap.put("result", "success");
 		return resultMap;
@@ -87,21 +88,13 @@ public class BoardService {
 		return resultMap;
 		
 	}
-	
-	public HashMap<String, Object> deleteBoardList(HashMap<String, Object> map) {
-		// TODO Auto-generated method stub
-		HashMap<String, Object> resultMap = new HashMap<String, Object>();
-		int cnt = boardMapper.deleteBoardList(map);
-		
-		resultMap.put("result", "success");
-		return resultMap;
-	}
 
 	public void addBoardImg(HashMap<String, Object> map) {
 		// TODO Auto-generated method stub
 		int cnt = boardMapper.insertBoardImg(map);
-		
 	}
 	
-
+	
+	
+	
 }

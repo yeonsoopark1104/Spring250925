@@ -31,6 +31,12 @@ public class MemberController {
         return "/member/member-join";
     }
 	
+	@RequestMapping("/mgr/member/list.do") 
+    public String mgr(Model model) throws Exception{ 
+		
+        return "/mgr/member-list";
+    }
+	
 	@RequestMapping("/addr.do") 
     public String addr(Model model) throws Exception{ 
 		
@@ -69,6 +75,15 @@ public class MemberController {
 	public String add(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();
 		resultMap = memberService.memberInsert(map);
+		
+		return new Gson().toJson(resultMap);
+	}
+	
+	@RequestMapping(value = "/mgr/member/list.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String memberList(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		resultMap = memberService.getMemberList(map);
 		
 		return new Gson().toJson(resultMap);
 	}

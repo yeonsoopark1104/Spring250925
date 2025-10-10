@@ -33,11 +33,8 @@ public interface BoardMapper {
 	
 	// 조회수 증가
 	int updateCnt(HashMap<String, Object> map);
-	
-	// 학생 여러명 삭제
-	int deleteBoardList(HashMap<String, Object> map);
 
-	// 첨부파일(이미지)업로드
+	// 첨부파일(이미지) 업로드
 	int insertBoardImg(HashMap<String, Object> map);
 	
 	// 첨부파일 목록

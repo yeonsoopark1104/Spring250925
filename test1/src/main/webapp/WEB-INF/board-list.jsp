@@ -37,7 +37,7 @@
         <div>
             <select v-model="searchOption">
                 <option value="all">:: 전체 ::</option>
-                <option value="title">:: 제목 ::</option>   
+                <option value="title">:: 제목 ::</option>
                 <option value="id">:: 작성자 ::</option>
             </select>
             <input v-model="keyword">
@@ -70,7 +70,6 @@
         <div>
             <table>
                 <tr>
-                    <th><input type="checkbox" @click="fnAllCheck()"></th>
                     <th>번호</th>
                     <th>제목</th>
                     <th>작성자</th>
@@ -79,9 +78,6 @@
                     <th>삭제</th>
                 </tr>
                 <tr v-for="item in list">
-                    <td>
-                        <input type="checkbox" :value="item.boardNo" v-model="selectItem">
-                    </td>
                     <td>{{item.boardNo}}</td>
                     <td>
                         <a href="javascript:;" @click="fnView(item.boardNo)">{{item.title}}</a>

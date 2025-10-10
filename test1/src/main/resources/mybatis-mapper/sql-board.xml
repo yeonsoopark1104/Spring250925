@@ -78,7 +78,12 @@
 		WHERE BOARDNO = #{boardNo}
 	</delete>
 	
-	<insert id="insertBoard" parameterType="hashmap" useGeneratedKeys="true" keyColumn="BOARDNO" keyProperty="boardNo">
+	<insert id="insertBoard" 
+			parameterType="hashmap" 
+			useGeneratedKeys="true" 
+			keyColumn="BOARDNO" 
+			keyProperty="boardNo">
+			
 		INSERT INTO TBL_BOARD 
 		VALUES(B_SEQ.NEXTVAL, #{title}, #{contents}, #{userId}, 0, 0, 1 , SYSDATE, SYSDATE)
 	</insert>
@@ -108,16 +113,15 @@
 			CNT = CNT + 1
 		WHERE BOARDNO = #{boardNo}
 	</update>
-	
-	<insert id="inertBoardImg" parameterType="hashmap">
+	<insert id="insertBoardImg" parameterType="hashmap">
 		INSERT INTO TBL_BOARD_FILE
-		VALUES (FILE_SEQ.NEXTVAL, #{boardNo}, #{path}, #{fileName}, #{orgName}, #{size}, #{ext})
+		VALUES(FILE_SEQ.NEXTVAL, #{boardNo}, #{path}, #{fileName}, #{orgName}, #{size}, #{ext})
 	</insert>
 	
-	<select id="selectFileList" parameterType="hashmap" resultType="com.examle.test1.model.Board">
+	<select id="selectFileList" parameterType="hashmap" resultType="com.example.test1.model.Board">
 		SELECT *
-		FROM TBL_BAORD_FILE
-		WHERE BOARDNO + #{boardNo}
+		FROM TBL_BOARD_FILE
+		WHERE BOARDNO = #{boardNo}
 	</select>
 	
 </mapper>

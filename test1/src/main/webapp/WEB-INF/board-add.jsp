@@ -78,13 +78,12 @@
                     data: param,
                     success: function (data) {
                         alert("등록되었습니다.");
-                        location.href="board-list.do";
-                        console.log(data);
+                        console.log(data.boardNo);
                         var form = new FormData();
                         form.append( "file1",  $("#file1")[0].files[0] );
-                        form.append( "boardNo",  data.boardNo); // 임시 pk
+                        form.append( "boardNo",  data.boardNo); 
                         self.upload(form);  
-                        // location.href="borad-list.do"
+                    //    location.href="board-list.do";
                     }
                 });
             },
@@ -97,9 +96,9 @@
                     , processData : false
                     , contentType : false
                     , data : form
-                    , success:function(response) { 
+                    , success:function(data) { 
                         console.log(data);
-                   }	           
+                    }	           
                 });
             }
         }, // methods
