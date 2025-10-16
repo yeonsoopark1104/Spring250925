@@ -85,7 +85,7 @@
 			keyProperty="boardNo">
 			
 		INSERT INTO TBL_BOARD 
-		VALUES(B_SEQ.NEXTVAL, #{title}, #{contents}, #{userId}, 0, 0, 1 , SYSDATE, SYSDATE)
+		VALUES(B_SEQ.NEXTVAL, #{title}, '', #{userId}, 0, 0, 1 , SYSDATE, SYSDATE, #{contents})
 	</insert>
 	
 	<select id="selectBoard" parameterType="hashmap" resultType="com.example.test1.model.Board">

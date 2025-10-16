@@ -13,5 +13,4 @@ public class Member {
 	private int cnt;
 	private String gender;
 	private String cBirth;
-	
 }

@@ -6,7 +6,8 @@
 	<select id="memberLogin" parameterType="hashmap" resultType="com.example.test1.model.Member">
 		SELECT *
 		FROM TBL_USER
-		WHERE USERID = #{id} AND PASSWORD = #{pwd}
+		WHERE USERID = #{id}
+		<!-- AND PASSWORD = #{pwd} 해시적용 후 제거 -->
 	</select>
 	
 	<select id="memberCheck" parameterType="hashmap" resultType="com.example.test1.model.Member">
@@ -17,18 +18,19 @@
 	
 	<insert id="memberAdd" parameterType="hashmap">
 		INSERT INTO TBL_USER
-		VALUES(#{id}, #{pwd}, #{name}, NULL, NULL, NULL, #{addr}, #{phone}, NULL, #{gender}, #{status}, SYSDATE, SYSDATE)
+		VALUES(#{id}, #{hashPwd}, #{name}, NULL, NULL, NULL, #{addr}, #{phone}, NULL, #{gender}, #{status}, SYSDATE, SYSDATE, 0)
 	</insert>
 	
 	<select id="selectMemberList" parameterType="hashmap" resultType="com.example.test1.model.Member">
-		SELECT *
+		SELECT 
 			U.*,
 			DECODE(
-				BIRTH,
-				NULL,
-				'정보없음',
-				SUBSTR(BIRTH, 3, 2) || '.' || SUBSTR(BIRTH, 5, 2) || '.' || SUBSTR(BIRTH, 7, 2)
-			)
+		        BIRTH,
+		        NULL,
+		        '정보없음',
+		        SUBSTR(BIRTH, 3, 2) || '.' || SUBSTR(BIRTH, 5, 2) || '.' || SUBSTR(BIRTH, 7, 2)
+		    ) CBIRTH
+		FROM TBL_USER U
 	</select>
 	
 	<update id="cntIncrease" parameterType="hashmap">
@@ -45,6 +47,29 @@
 		SET 
 			CNT = 0
 		WHERE USERID = #{id}
+	</update>
+	
+	<select id="authMember1" parameterType="hashmap" resultType="com.example.test1.model.Member">
+		SELECT *
+		FROM TBL_USER
+		WHERE 
+			USERID = #{userId} AND NAME = #{name} 
+			AND REPLACE(PHONE, '-', '') = #{phone}
+	</select>
+	
+	<select id="authMember2" parameterType="hashmap" resultType="int">
+		SELECT COUNT(*)
+		FROM TBL_USER
+		WHERE 
+			USERID = #{userId} AND NAME = #{name} 
+			AND REPLACE(PHONE, '-', '') = REPLACE(#{phone}, '-', '')
+	</select>
+	
+	<update id="updatePwd" parameterType="hashmap">
+		UPDATE TBL_USER
+		SET
+			PASSWORD = #{hashPwd}
+		WHERE USERID = #{userId}
 	</update>
 	
 </mapper>

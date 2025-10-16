@@ -27,5 +27,14 @@ public interface MemberMapper {
 	// 로그인 실패 시 cnt 1증가
 	int cntIncrease(HashMap<String, Object> map);
 	
+	// 사용자 인증 1(리턴 Member)
+	Member authMember1(HashMap<String, Object> map);
+	
+	// 사용자 인증 2(리턴 int)
+	int authMember2(HashMap<String, Object> map);
+	
+	// 비밀번호 변경
+	int updatePwd(HashMap<String, Object> map);
+	
 }
 
